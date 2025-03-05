@@ -5,16 +5,21 @@
 TODO
 
 ## How to run
-### Prerequizites 
-- Python ^3.11,<3.12
-- Poetry
 
-### Dependency installation
-Simply run:
-```sh
-$ poetry install
+### Prerequisites 
+- [uv](https://docs.astral.sh/uv/#installation)
+
+### Python 3.12
+
+```bash
+uv python install 3.12
 ```
-and everything should install automatically
+
+### Sync project's dependecies state
+
+```bash
+uv sync
+```
 
 --- 
 

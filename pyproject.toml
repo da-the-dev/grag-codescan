@@ -1,25 +1,24 @@
-[tool.poetry]
-name = "gai-codescanner"
+[project]
+name = "grag-codescan"
 version = "0.1.0"
 description = ""
-authors = ["Alexey Tkachenko <a.tkachenko@innopolis.university>", "Anatoly Soldatov <a.soldatov@innopolis.university"]
 readme = "README.md"
-
-[tool.poetry.dependencies]
-python = "^3.11,<3.12"
-jupyter = "^1.1.1"
-ipykernel = "^6.29.5"
-llama-index = "^0.12.18"
-llama-index-embeddings-huggingface = "^0.5.1"
-llama-index-llms-ollama = "^0.5.2"
-llama-index-readers-github = "^0.5.0"
-yfiles-jupyter-graphs = "^1.10.1"
-ipywidgets = "^8.1.5"
-mlflow = "^2.20.2"
-tree-sitter = "^0.24.0"
-tree-sitter-languages = "^1.10.2"
-
-
-[build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
+requires-python = ">=3.12"
+dependencies = [
+    "ipykernel>=6.29.5",
+    "ipywidgets>=8.1.5",
+    "jupyter>=1.1.1",
+    "langchain>=0.3.20",
+    "langchain-community>=0.3.19",
+    "langchain-ollama>=0.2.3",
+    "llama-index>=0.12.22",
+    "llama-index-embeddings-huggingface>=0.5.2",
+    "llama-index-llms-ollama>=0.5.3",
+    "llama-index-readers-github>=0.6.0",
+    "mlflow>=2.20.3",
+    "rich>=13.9.4",
+    "tree-sitter>=0.24.0",
+    "tree-sitter-languages>=1.10.2",
+    "tree-sitter-python>=0.23.6",
+    "yfiles-jupyter-graphs>=1.10.1",
+]
