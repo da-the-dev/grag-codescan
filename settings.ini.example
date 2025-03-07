@@ -1,0 +1,9 @@
+[DEFAULT]
+LLM = deepseek-r1
+EMBED_MODEL = jinai
+
+[github]
+repo = repo
+owner = owner
+branch = main
+token = ghp_abc...
