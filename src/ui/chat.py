@@ -52,11 +52,11 @@ def chat(sidebar: dict[str, Any]):
             msg = gr.Textbox()
             clear = gr.Button("Clear")
 
+            # Hack to reset the engine
             @clear.click
             def clearer():
-                print("clicked!")
                 global ce
-                ce = chat_engine(documents)
+                ce.reset()
 
             def user(user_message, history: list):
                 return "", history + [{"role": "user", "content": user_message}]
