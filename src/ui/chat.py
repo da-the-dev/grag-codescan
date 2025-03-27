@@ -1,16 +1,13 @@
-import os
 import gradio as gr
 from typing import Any
-
-
 from qdrant_client import QdrantClient
 
-from src.modules.github_clone import github_clone
 from llama_index.core import VectorStoreIndex, StorageContext, Document
 from llama_index.vector_stores.qdrant import QdrantVectorStore
 from llama_index.core.chat_engine.types import ChatMode, BaseChatEngine
 from llama_index.llms.ollama import Ollama
 from llama_index.embeddings.ollama import OllamaEmbedding
+
 
 __all__ = "chat"
 
@@ -66,7 +63,7 @@ def chat(sidebar: dict[str, Any]):
 
             def bot(history: list):
                 bot_message = ce.stream_chat(history[-1]["content"])
-                
+
                 history.append({"role": "assistant", "content": ""})
                 for token in bot_message.response_gen:
                     history[-1]["content"] += token
