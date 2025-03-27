@@ -14,10 +14,20 @@ class SidebarSettings(BaseSettings):
         env_file=".env",
         extra="ignore",
     )
+    
+class QdrantSettings(BaseSettings):
+    HOST: str
+
+    model_config = SettingsConfigDict(
+        env_prefix="QDRANT_",
+        env_file=".env",
+        extra="ignore",
+    )
 
 # Initialize all of the settings classes from above over here
 class Settings(BaseSettings):
     sidebar: SidebarSettings = SidebarSettings()
+    qdrant: QdrantSettings = QdrantSettings()
 
 # For an example of accessing settings check src/modules/sidebar.py
 settings = Settings()
