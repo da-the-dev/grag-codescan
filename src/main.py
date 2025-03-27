@@ -1,6 +1,6 @@
 import gradio as gr
 
-from src.modules import (
+from src.ui import (
     graph,
     chat,
     sidebar
