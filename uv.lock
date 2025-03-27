@@ -876,6 +876,7 @@ dependencies = [
     { name = "llama-index-llms-ollama" },
     { name = "llama-index-readers-github" },
     { name = "mlflow" },
+    { name = "pydantic-settings" },
     { name = "rich" },
     { name = "tree-sitter" },
     { name = "tree-sitter-java" },
@@ -887,11 +888,17 @@ dependencies = [
 [package.dev-dependencies]
 prod = [
     { name = "beanie" },
+    { name = "fastapi" },
     { name = "gradio" },
     { name = "llama-index" },
     { name = "llama-index-embeddings-ollama" },
     { name = "llama-index-llms-ollama" },
     { name = "llama-index-readers-github" },
+    { name = "pydantic-settings" },
+    { name = "tree-sitter" },
+    { name = "tree-sitter-java" },
+    { name = "tree-sitter-languages" },
+    { name = "tree-sitter-python" },
 ]
 
 [package.metadata]
@@ -911,6 +918,7 @@ requires-dist = [
     { name = "llama-index-llms-ollama", specifier = ">=0.5.3" },
     { name = "llama-index-readers-github", specifier = ">=0.6.0" },
     { name = "mlflow", specifier = ">=2.20.3" },
+    { name = "pydantic-settings", specifier = ">=2.8.1" },
     { name = "rich", specifier = ">=13.9.4" },
     { name = "tree-sitter", specifier = "<=0.22" },
     { name = "tree-sitter-java", specifier = ">=0.23.5" },
@@ -922,11 +930,17 @@ requires-dist = [
 [package.metadata.requires-dev]
 prod = [
     { name = "beanie", specifier = ">=1.29.0" },
+    { name = "fastapi", specifier = ">=0.115.11" },
     { name = "gradio", specifier = ">=5.20.1" },
     { name = "llama-index", specifier = ">=0.12.22" },
     { name = "llama-index-embeddings-ollama", specifier = ">=0.6.0" },
     { name = "llama-index-llms-ollama", specifier = ">=0.5.3" },
     { name = "llama-index-readers-github", specifier = ">=0.6.0" },
+    { name = "pydantic-settings", specifier = ">=2.8.1" },
+    { name = "tree-sitter", specifier = "<=0.22" },
+    { name = "tree-sitter-java", specifier = ">=0.23.5" },
+    { name = "tree-sitter-languages", specifier = ">=1.10.2" },
+    { name = "tree-sitter-python", specifier = ">=0.23.6" },
 ]
 
 [[package]]
