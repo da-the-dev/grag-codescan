@@ -1,14 +1,22 @@
 services:
-  cache:
-    image: mongo:latest
+  ollama:
+    image: ollama/ollama
     ports:
-      - "27017:27017"
+      - 11434:11434
     volumes:
-      - mongodb_data:/data/db
-    # environment:
-    #   - MONGO_INITDB_ROOT_USERNAME=root
-    #   - MONGO_INITDB_ROOT_PASSWORD=example
-
-volumes:
-  redis_data:
-  mongodb_data:
+      - ${HOME}/ollama:/root/.ollama
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [ gpu ]
+  ui:
+    image: ghcr.io/da-the-dev/grag-codescan:latest
+    ports:
+      - 7860:7860
+    env_file:
+      - .env
+    environment:
+      - PROD=true

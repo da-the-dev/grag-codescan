@@ -27,3 +27,18 @@ dependencies = [
     "tree-sitter-python>=0.23.6",
     "yfiles-jupyter-graphs>=1.10.1",
 ]
+
+[dependency-groups]
+prod = [
+    "beanie>=1.29.0",
+    "fastapi>=0.115.11",
+    "gradio>=5.20.1",
+    "llama-index>=0.12.22",
+    "llama-index-embeddings-ollama>=0.6.0",
+    "llama-index-llms-ollama>=0.5.3",
+    "llama-index-readers-github>=0.6.0",
+    "tree-sitter<=0.22",
+    "tree-sitter-languages>=1.10.2",
+    "tree-sitter-java>=0.23.5",
+    "tree-sitter-python>=0.23.6",
+]
