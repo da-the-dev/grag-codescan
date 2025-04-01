@@ -18,6 +18,8 @@ from .events import (
     InstructionEvent,
     MappingEvent,
     GraphEvent,
+    TripletsEvent,
+    DiagramEvent,
 )
 
 
@@ -72,3 +74,23 @@ class AnalysisFlow(Workflow):
         graph_triplets = "magic"
 
         return GraphEvent(graph_triplets=graph_triplets)
+
+    @step
+    async def triplets_parsing(self, ev: GraphEvent) -> TripletsEvent:
+        graph_triplets = ev.graph_triplets
+
+        # TODO!
+
+        parse = lambda x: ("from", "how", "where")
+
+        return TripletsEvent(triplets=parse(graph_triplets))
+
+    @step
+    async def html_diagram(self, ev: TripletsEvent) -> DiagramEvent:
+        triplets = ev.triplets
+
+        # TODO!
+
+        html = """<html></html?"""
+
+        return DiagramEvent(diagram=html)

@@ -4,6 +4,7 @@ from llama_index.core.workflow import (
     StopEvent,
 )
 
+
 class GithubEvent(StartEvent):
     file_tree: str
     readme: str
@@ -17,5 +18,13 @@ class MappingEvent(Event):
     component_mapping: str
 
 
-class GraphEvent(StopEvent):
+class GraphEvent(Event):
     graph_triplets: str
+
+
+class TripletsEvent(Event):
+    triplets: tuple[str, str, str]
+
+
+class DiagramEvent(StopEvent):
+    diagram: str
