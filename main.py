@@ -12,4 +12,4 @@ with gr.Blocks() as demo:
     graph(sb)
     chat(sb) 
     
-demo.launch()
+demo.launch(debug=True)
