@@ -1,5 +1,6 @@
 import gradio as gr
 from typing import Any
+
 from qdrant_client import QdrantClient
 
 from llama_index.core import VectorStoreIndex, StorageContext, Document
@@ -35,43 +36,44 @@ def chat_engine(documents: list[Document]):
 
 
 def chat(sidebar: dict[str, Any]):
-    documents: gr.State = sidebar["documents"]
+    # documents: gr.State = sidebar["readme"]
 
     with gr.Tab("Chat") as chat:
         gr.Markdown(lambda t: f"# Chat for {t}", inputs=sidebar["repo"])
 
-        @gr.render(inputs=documents)
-        def render_chat(documents: list[Document]):
-            if not documents or len(documents) <= 0:
-                gr.Markdown("# No code to chat with! Use the sidebar to scan some code")
-                return
 
-            ce: BaseChatEngine = chat_engine(documents)
+#         @gr.render(inputs=documents)
+#         def render_chat(documents: list[Document]):
+#             if not documents or len(documents) <= 0:
+#                 gr.Markdown("# No code to chat with! Use the sidebar to scan some code")
+#                 return
 
-            chatbot = gr.Chatbot(type="messages")
-            msg = gr.Textbox()
-            clear = gr.Button("Clear")
+#             ce: BaseChatEngine = chat_engine(documents)
 
-            # Hack to reset the engine
-            @clear.click
-            def clearer():
-                global ce
-                ce.reset()
+#             chatbot = gr.Chatbot(type="messages")
+#             msg = gr.Textbox()
+#             clear = gr.Button("Clear")
 
-            def user(user_message, history: list):
-                return "", history + [{"role": "user", "content": user_message}]
+#             # Hack to reset the engine
+#             @clear.click
+#             def clearer():
+#                 global ce
+#                 ce.reset()
 
-            def bot(history: list):
-                bot_message = ce.stream_chat(history[-1]["content"])
+#             def user(user_message, history: list):
+#                 return "", history + [{"role": "user", "content": user_message}]
 
-                history.append({"role": "assistant", "content": ""})
-                for token in bot_message.response_gen:
-                    history[-1]["content"] += token
-                    yield history
+#             def bot(history: list):
+#                 bot_message = ce.stream_chat(history[-1]["content"])
 
-            msg.submit(user, [msg, chatbot], [msg, chatbot], queue=False).then(
-                bot, chatbot, chatbot
-            )
-            clear.click(lambda: None, None, chatbot, queue=False)
+#                 history.append({"role": "assistant", "content": ""})
+#                 for token in bot_message.response_gen:
+#                     history[-1]["content"] += token
+#                     yield history
 
-    return locals()
+#             msg.submit(user, [msg, chatbot], [msg, chatbot], queue=False).then(
+#                 bot, chatbot, chatbot
+#             )
+#             clear.click(lambda: None, None, chatbot, queue=False)
+
+#     return locals()
