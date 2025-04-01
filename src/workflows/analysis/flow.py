@@ -91,6 +91,6 @@ class AnalysisFlow(Workflow):
 
         # TODO!
 
-        html = """<html></html?"""
+        html = """<html></html>"""
 
         return DiagramEvent(diagram=html)
