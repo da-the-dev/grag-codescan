@@ -2,18 +2,10 @@ import re
 from pyvis.network import Network
 from itertools import cycle
 
-
-def extract_triplets(text: str) -> list[tuple[str, str, str]]:
-    triplet_pattern = re.compile(r"\(\s*([^,]+?)\s*,\s*([^,]+?)\s*,\s*([^)]+?)\s*\)")
-
-    # Find all matches in the text
-    matches = triplet_pattern.findall(text)
-    triplets = [tuple(match) for match in matches]
-
-    return triplets
+from src.modules.structure_output import Triplet
 
 
-def generate_graph(triplets: list[tuple]) -> str:
+def generate_graph(triplets: list[Triplet]) -> str:
     g = Network(
         width="1600px",
         height="800px",  # "600px",
@@ -46,7 +38,9 @@ def generate_graph(triplets: list[tuple]) -> str:
             "hotpink",
         ]
     )
-    for entity1, relation, entity2 in triplets:
+    for triplet in triplets:
+        entity1, relation, entity2 = triplet.node1, triplet.connection, triplet.node2
+
         if entity1 not in g.get_nodes():
             g.add_node(entity1, label=entity1, color=next(colorgenerator))
 

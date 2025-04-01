@@ -1,6 +1,5 @@
 __all__ = ["mapping_template"]
 
-from llama_index.core import PromptTemplate
 from llama_index.core import ChatPromptTemplate
 from llama_index.core.llms import ChatMessage, MessageRole
 
