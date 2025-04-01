@@ -7,19 +7,19 @@ from llama_index.core.workflow import (
 
 from llama_index.llms.ollama import Ollama
 
+from src.modules.structure_output import Graph
 from src.prompts import (
     instruction_template,
     mapping_template,
     graph_template,
 )
-from src.modules.graph import extract_triplets, generate_graph
+from src.modules.graph import generate_graph
 
 from .events import (
     GithubEvent,
     InstructionEvent,
     MappingEvent,
     GraphEvent,
-    TripletsEvent,
     DiagramEvent,
 )
 
@@ -60,51 +60,32 @@ class AnalysisFlow(Workflow):
 
     @step
     async def graph_event(self, ev: MappingEvent, ctx: Context) -> GraphEvent:
-        # TODO!
         component_mapping = ev.component_mapping
         explanation = ctx.get("explanation")
 
-        # messages = graph_template.format_messages(
-        #     explanation=explanation, component_mapping=component_mapping
-        # )
+        messages = graph_template.format_messages(
+            explanation=explanation, component_mapping=component_mapping
+        )
 
-        # response = await self.llm.achat(messages=messages)
+        response = await self.llm.as_structured_llm(output_cls=Graph).achat(messages=messages)
 
-        # graph_triplets = response.message.content
+        graph = response.raw
 
-        graph_triplets = "magic"
-
-        return GraphEvent(graph_triplets=graph_triplets)
+        return GraphEvent(graph=graph)
 
     @step
-    async def triplets_parsing(self, ev: GraphEvent) -> TripletsEvent:
-        """
-        Parses the graph triplets from a GraphEvent to extract individual triplets.
-
-        Args:
-            ev (GraphEvent): The event containing the llm output with triplets as a string.
-
-        Returns:
-            TripletsEvent: An event containing the extracted triplets as a list of tuples.
-        """
-        graph_triplets: str = ev.graph_triplets
-        triplets = extract_triplets(graph_triplets)
-
-        return TripletsEvent(triplets=triplets)
-
-    @step
-    async def html_diagram(self, ev: TripletsEvent) -> DiagramEvent:
+    async def html_diagram(self, ev: GraphEvent) -> DiagramEvent:
         """
         Generates an HTML diagram based on the triplets extracted in the previous step.
 
         Args:
-            ev (TripletsEvent): The event containing the extracted triplets as a list of tuples.
+            ev (GraphEvent): The event containing the graph.
 
         Returns:
             DiagramEvent: An event containing the generated HTML diagram as a str.
         """
-        triplets: list[tuple[str, str, str]] = ev.triplets
+        graph = ev.graph
 
-        html = generate_graph(triplets)
+        html = generate_graph(graph.triplets)
 
         return DiagramEvent(diagram=html)
