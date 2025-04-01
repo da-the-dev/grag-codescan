@@ -12,6 +12,7 @@ from src.prompts import (
     mapping_template,
     graph_template,
 )
+from src.modules.graph import extract_triplets, generate_graph
 
 from .events import (
     GithubEvent,
@@ -77,20 +78,33 @@ class AnalysisFlow(Workflow):
 
     @step
     async def triplets_parsing(self, ev: GraphEvent) -> TripletsEvent:
-        graph_triplets = ev.graph_triplets
+        """
+        Parses the graph triplets from a GraphEvent to extract individual triplets.
 
-        # TODO!
+        Args:
+            ev (GraphEvent): The event containing the llm output with triplets as a string.
 
-        parse = lambda x: ("from", "how", "where")
+        Returns:
+            TripletsEvent: An event containing the extracted triplets as a list of tuples.
+        """
+        graph_triplets: str = ev.graph_triplets
+        triplets = extract_triplets(graph_triplets)
 
-        return TripletsEvent(triplets=parse(graph_triplets))
+        return TripletsEvent(triplets=triplets)
 
     @step
     async def html_diagram(self, ev: TripletsEvent) -> DiagramEvent:
-        triplets = ev.triplets
+        """
+        Generates an HTML diagram based on the triplets extracted in the previous step.
 
-        # TODO!
+        Args:
+            ev (TripletsEvent): The event containing the extracted triplets as a list of tuples.
 
-        html = """<html></html>"""
+        Returns:
+            DiagramEvent: An event containing the generated HTML diagram as a str.
+        """
+        triplets: list[tuple[str, str, str]] = ev.triplets
+
+        html = generate_graph(triplets)
 
         return DiagramEvent(diagram=html)
