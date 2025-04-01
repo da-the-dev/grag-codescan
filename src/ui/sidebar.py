@@ -1,17 +1,28 @@
 import gradio as gr
 from src.settings import settings
-from src.modules.github_clone import github_clone
+from src.modules.github import GitHubService
 
 __all__ = "sidebar"
 
 
-def clone_and_notify(r, o, b, t):
-    gr.Info("Cloning code...")
-    # why is this a tuple?????
-    (documents,) = (github_clone(r, o, b, t, True),)
-    gr.Success("Done! Check the tabs")
+def get_repo_tree_and_readme(repo, owner, branch, token) -> tuple[str, str]:
+    gr.Info("Trying to extract repository code...")
 
-    return documents
+    gh_service = GitHubService()
+
+    try:
+        readme = gh_service.get_github_readme(username=owner, repo=repo)
+        file_tree = gh_service.get_github_file_paths_as_list(username=owner, repo=repo)
+    except ValueError as e:
+        gr.Error(f"{e}")
+        return
+    except Exception as e:
+        gr.Error(f"Error: {e}")
+        return
+
+    gr.Info("Repository file tree and readme extracted successfully.")
+
+    return file_tree, readme
 
 
 def sidebar():
@@ -44,17 +55,18 @@ def sidebar():
 
         run = gr.Button("Start analysis")
 
-        documents = gr.State()
+        file_tree = gr.State()
+        readme = gr.State()
 
         run.click(
-            clone_and_notify,
+            get_repo_tree_and_readme,
             [
                 repo,
                 owner,
                 branch,
                 token,
             ],
-            documents,
+            [file_tree, readme],
         )
 
     return locals()
