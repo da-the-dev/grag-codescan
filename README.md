@@ -1,12 +1,17 @@
-# Graph RAGs for comprehensive code analysis and knowledge extraction
+# Github's repo semantic graph generation
 
 ## Description
 
-TODO
+Our project is dedicated to graph constuction of the most important code repository semantic components. We use LLM and several stages of applying prompt to retreive significat and relevant information without putting all codebase in the context.
+
+## Gradio
+
+![alt](./imgs/demo.gif)
 
 ## How to run
 
-### Prerequisites 
+### Prerequisites
+
 - [uv](https://docs.astral.sh/uv/#installation)
 
 ### Python 3.12
@@ -15,14 +20,27 @@ TODO
 uv python install 3.12
 ```
 
-### Sync project's dependecies state
+### Sync project's dependencies state
 
 ```bash
 uv sync
 ```
 
---- 
+### Debug
 
-## Contributors 
+```bash
+uvx gradio main.py
+```
+
+### Run
+
+```bash
+uv run main.py
+```
+
+---
+
+## Contributors
+
 - Alexey Tkachenko <a.tkachenko@innopolis.university>
 - Anatoly Soldatov <a.soldatov@innopolis.university>
