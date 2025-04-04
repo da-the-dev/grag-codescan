@@ -21,7 +21,7 @@ from .events import *
 
 
 class AnalysisFlow(Workflow):
-    llm = Ollama("llama3.2")
+    llm = Ollama("qwen2.5-coder")
 
     @step
     async def get_info(self, ev: InfoEvent) -> GithubEvent | StopEvent:
