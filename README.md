@@ -13,6 +13,7 @@ Our project is dedicated to graph constuction of the most important code reposit
 ### Prerequisites
 
 - [uv](https://docs.astral.sh/uv/#installation)
+- [ollama](https://ollama.com/download)
 
 ### Python 3.12
 
@@ -26,6 +27,12 @@ uv python install 3.12
 uv sync
 ```
 
+### Ollama pull model
+
+```bash
+uvx ollama pull qwen2.5-coder
+```
+
 ### Debug
 
 ```bash
@@ -36,6 +43,12 @@ uvx gradio main.py
 
 ```bash
 uv run main.py
+```
+
+### Run via docker
+
+```bash
+docker compose up
 ```
 
 ---
