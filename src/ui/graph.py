@@ -13,22 +13,22 @@ def graph(sidebar: dict[str, Any]):
 
         visualize_btn = gr.Button("Visualize Graph")
 
-        file_tree = sidebar["file_tree"]
-        readme = sidebar["readme"]
+        repo = sidebar["repo"]
+        owner = sidebar["owner"]
 
-        async def handler(file_tree, readme):
-            gr.Info("Started initial analysis...")
+        async def handler(repo, owner):
+
             w = AnalysisFlow(timeout=30)
             results = await w.run(
-                file_tree=file_tree,
-                readme=readme,
+                repo=repo,
+                owner=owner,
             )
 
             return results
 
         visualize_btn.click(
             handler,
-            inputs=[file_tree, readme],
+            inputs=[repo, owner],
             outputs=graph_output,
         )
 

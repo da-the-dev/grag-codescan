@@ -7,6 +7,7 @@ from llama_index.core.workflow import (
 )
 from llama_index.llms.ollama import Ollama
 
+from src.modules.github import GitHubService
 from src.modules.graph import generate_graph
 from src.modules.structure_output import Graph
 from src.prompts import (
@@ -15,16 +16,31 @@ from src.prompts import (
     graph_template,
 )
 
-from .events import (
-    GithubEvent,
-    InstructionEvent,
-    MappingEvent,
-    GraphEvent,
-)
+from .events import *
 
 
 class AnalysisFlow(Workflow):
     llm = Ollama("llama3.2")
+
+    @step
+    async def get_info(self, ev: InfoEvent) -> GithubEvent | StopEvent:
+        owner = ev.owner
+        repo = ev.repo
+        
+        gr.Info("Extracting repository info...")
+
+        gh_service = GitHubService()
+
+        try:
+            readme = gh_service.get_github_readme(username=owner, repo=repo)
+            file_tree = gh_service.get_github_file_paths_as_list(username=owner, repo=repo)
+
+            gr.Success("Repository file tree and README extracted successfully!")
+
+            return GithubEvent(file_tree=file_tree, readme=readme)
+        except Exception as e:
+            gr.Error(f"Error: {e}")
+            return StopEvent("error")
 
     @step
     async def diagram_instruction(
@@ -35,7 +51,7 @@ class AnalysisFlow(Workflow):
 
         await ctx.set("file_tree", file_tree)
 
-
+        gr.Info("Started initial analysis...")
         messages = instruction_template.format_messages(
             file_tree=file_tree, readme=readme
         )

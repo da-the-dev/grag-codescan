@@ -1,8 +1,11 @@
 from llama_index.core.workflow import Event, StartEvent
 from src.modules.structure_output import Graph
 
+class InfoEvent(StartEvent):
+    repo: str
+    owner: str
 
-class GithubEvent(StartEvent):
+class GithubEvent(Event):
     file_tree: str
     readme: str
 
