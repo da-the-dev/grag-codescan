@@ -9,7 +9,7 @@ from jinja2 import StrictUndefined
 
 
 env = Environment(
-    loader=FileSystemLoader("static/templates/mapping"),
+    loader=FileSystemLoader("src/templates/mapping"),
     trim_blocks=True,
     lstrip_blocks=True,
     undefined=StrictUndefined,

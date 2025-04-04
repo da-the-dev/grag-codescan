@@ -9,7 +9,7 @@ from jinja2 import StrictUndefined
 
 
 env = Environment(
-    loader=FileSystemLoader("static/templates/instruction"),
+    loader=FileSystemLoader("src/templates/instruction"),
     trim_blocks=True,
     lstrip_blocks=True,
     undefined=StrictUndefined,
