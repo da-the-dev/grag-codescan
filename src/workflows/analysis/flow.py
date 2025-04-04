@@ -1,3 +1,4 @@
+import os
 import gradio as gr
 from llama_index.core.workflow import (
     Workflow,
@@ -21,7 +22,10 @@ from .events import *
 
 
 class AnalysisFlow(Workflow):
-    llm = Ollama("qwen2.5-coder")
+    llm = Ollama(
+        "qwen2.5-coder",
+        base_url="http://ollama:11434" if os.environ["PROD"] else "http://localhost:11434",
+    )
 
     @step
     async def get_info(self, ev: InfoEvent) -> GithubEvent | StopEvent:

@@ -1,6 +1,7 @@
 services:
   ollama:
     image: ollama/ollama
+    container_name: ollama
     ports:
       - 11434:11434
     volumes:
@@ -12,11 +13,20 @@ services:
             - driver: nvidia
               count: all
               capabilities: [ gpu ]
+    networks:
+      - codescan
   ui:
     image: ghcr.io/da-the-dev/grag-codescan:latest
+    # build: .
+    container_name: ui
     ports:
       - 7860:7860
     env_file:
       - .env
     environment:
       - PROD=true
+    networks:
+      - codescan
+
+networks:
+  codescan:
