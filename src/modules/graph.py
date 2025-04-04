@@ -2,13 +2,13 @@ import re
 from pyvis.network import Network
 from itertools import cycle
 
-from src.modules.structure_output import Triplet
+from src.modules.structured_output.graph import Triplet
 
 
 def generate_graph(triplets: list[Triplet]) -> str:
     g = Network(
         width="1600px",
-        height="800px",  # "600px",
+        height="800px",
         directed=True,
         notebook=False,
         font_color="#ffffff",
@@ -39,7 +39,7 @@ def generate_graph(triplets: list[Triplet]) -> str:
         ]
     )
     for triplet in triplets:
-        entity1, relation, entity2 = triplet.node1, triplet.connection, triplet.node2
+        entity1, relation, entity2 = triplet.node_from, triplet.relation, triplet.node_to
 
         if entity1 not in g.get_nodes():
             g.add_node(entity1, label=entity1, color=next(colorgenerator))

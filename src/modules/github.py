@@ -148,8 +148,7 @@ class GitHubService:
                 ".cache/",
                 ".tmp/",
                 # Lock files and logs
-                "yarn.lock",
-                "poetry.lock",
+                ".lock",
                 ".log",
                 # Configuration files
                 ".vscode/",

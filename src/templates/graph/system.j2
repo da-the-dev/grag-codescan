@@ -9,13 +9,4 @@ Create a system design diagram as a graph of triplets based on the project's com
    - "depends on" (library/module dependencies)
 3. Keep connections concise (2-4 words max).
 4. Focus on direct relationships - avoid chaining (A→B→C should be two separate triplets).
-5. Triplets must be triplets, i.e. have the 3 s
-
-Example output:
-```
-<graph>
-(core,provides image processing to,api)
-(api,receives requests from,frontend)
-(plugins,add audio analysis to,core)
-(core,uses dependency injection for,plugins)
-</graph>
+5. Triplets must have nodes and connections defined, they cannot be empty
