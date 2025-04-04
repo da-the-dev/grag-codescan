@@ -1,3 +1,3 @@
 #!/bin/sh
 
-uvicorn src.main:app
+python -m main.py
