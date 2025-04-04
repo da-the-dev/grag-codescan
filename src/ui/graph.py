@@ -19,7 +19,7 @@ def graph(sidebar: dict[str, Any]):
         readme = sidebar["readme"]
 
         async def handler(file_tree, readme):
-            gr.Info("Started intial analysis...")
+            gr.Info("Started initial analysis...")
             w = AnalysisFlow(timeout=30)
             results = await w.run(
                 file_tree=file_tree,
