@@ -1,10 +1,10 @@
-import requests
+import os
 import jwt
 import time
+import requests
+from rich import print
 from datetime import datetime, timedelta
 from dotenv import load_dotenv
-import os
-from rich import print
 
 load_dotenv()
 
@@ -25,7 +25,7 @@ class GitHubService:
             and not self.github_token
         ):
             print(
-                "\033[93mWarning: No GitHub credentials provided. Using unauthenticated requests with rate limit of 60 requests/hour.\033[0m"
+                "Warning: No GitHub credentials provided. Using unauthenticated requests with rate limit of 60 requests/hour."
             )
 
         self.access_token = None

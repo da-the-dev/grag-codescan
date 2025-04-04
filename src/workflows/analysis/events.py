@@ -1,7 +1,4 @@
-from llama_index.core.workflow import (
-    Event,
-    StartEvent,
-)
+from llama_index.core.workflow import Event, StartEvent
 from src.modules.structure_output import Graph
 
 

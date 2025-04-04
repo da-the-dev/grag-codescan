@@ -1,22 +1,19 @@
+import gradio as gr
 from llama_index.core.workflow import (
     Workflow,
     Context,
     StopEvent,
     step,
 )
-
-import gradio as gr
-
-
 from llama_index.llms.ollama import Ollama
 
+from src.modules.graph import generate_graph
 from src.modules.structure_output import Graph
 from src.prompts import (
     instruction_template,
     mapping_template,
     graph_template,
 )
-from src.modules.graph import generate_graph
 
 from .events import (
     GithubEvent,

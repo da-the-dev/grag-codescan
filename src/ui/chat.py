@@ -1,3 +1,5 @@
+__all__ = "chat"
+
 import gradio as gr
 from typing import Any
 
@@ -8,9 +10,6 @@ from llama_index.vector_stores.qdrant import QdrantVectorStore
 from llama_index.core.chat_engine.types import ChatMode, BaseChatEngine
 from llama_index.llms.ollama import Ollama
 from llama_index.embeddings.ollama import OllamaEmbedding
-
-
-__all__ = "chat"
 
 
 def chat_engine(documents: list[Document]):

@@ -1,15 +1,13 @@
+__all__ = "graph"
 import gradio as gr
 from typing import Any
 
-from src.modules.graph import generate_graph
 from src.workflows import AnalysisFlow
-
-__all__ = "graph"
 
 
 def graph(sidebar: dict[str, Any]):
     with gr.Tab("Graph"):
-        header = gr.Markdown(lambda t: f"# Graph for {t}", inputs=sidebar["repo"])
+        gr.Markdown(lambda t: f"# Graph for {t}", inputs=sidebar["repo"])
 
         graph_output = gr.HTML(label="Graph Visualization", padding=False)
 
