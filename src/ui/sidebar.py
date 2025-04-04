@@ -36,19 +36,19 @@ def sidebar():
             max_lines=1,
             interactive=True,
         )
-        branch = gr.Textbox(
-            value=settings.sidebar.BRANCH or "",
-            label="Branch name",
-            max_lines=1,
-            interactive=True,
-        )
-        token = gr.Textbox(
-            value=settings.sidebar.TOKEN or "",
-            label="Token",
-            type="password",
-            max_lines=1,
-            interactive=True,
-        )
+        # branch = gr.Textbox(
+        #     value=settings.sidebar.BRANCH or "",
+        #     label="Branch name",
+        #     max_lines=1,
+        #     interactive=True,
+        # )
+        # token = gr.Textbox(
+        #     value=settings.sidebar.TOKEN or "",
+        #     label="Token",
+        #     type="password",
+        #     max_lines=1,
+        #     interactive=True,
+        # )
 
         run = gr.Button("Start analysis")
 
