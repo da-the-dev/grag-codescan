@@ -1,9 +1,7 @@
 from llama_index.core.workflow import (
     Event,
     StartEvent,
-    StopEvent,
 )
-
 from src.modules.structure_output import Graph
 
 
@@ -22,7 +20,3 @@ class MappingEvent(Event):
 
 class GraphEvent(Event):
     graph: Graph
-
-
-class DiagramEvent(StopEvent):
-    diagram: str

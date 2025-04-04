@@ -1,8 +1,11 @@
 from llama_index.core.workflow import (
     Workflow,
     Context,
+    StopEvent,
     step,
 )
+
+import gradio as gr
 
 
 from llama_index.llms.ollama import Ollama
@@ -20,7 +23,6 @@ from .events import (
     InstructionEvent,
     MappingEvent,
     GraphEvent,
-    DiagramEvent,
 )
 
 
@@ -36,45 +38,53 @@ class AnalysisFlow(Workflow):
 
         await ctx.set("file_tree", file_tree)
 
+
         messages = instruction_template.format_messages(
             file_tree=file_tree, readme=readme
         )
 
         response = await self.llm.achat(messages=messages)
+        gr.Success("Initial analysis done!")
 
         return InstructionEvent(explanation=response.message.content)
 
     @step
     async def mapping(self, ev: InstructionEvent, ctx: Context) -> MappingEvent:
         explanation = ev.explanation
-        file_tree = ctx.get("file_tree")
+        file_tree = await ctx.get("file_tree")
         await ctx.set("explanation", explanation)
 
+        gr.Info("Started mapping...")
         messages = mapping_template.format_messages(
             explanation=explanation, file_tree=file_tree
         )
 
         response = await self.llm.achat(messages=messages)
+        gr.Success("Mapping done!")
 
         return MappingEvent(component_mapping=response.message.content)
 
     @step
     async def graph_event(self, ev: MappingEvent, ctx: Context) -> GraphEvent:
         component_mapping = ev.component_mapping
-        explanation = ctx.get("explanation")
+        explanation = await ctx.get("explanation")
 
+        gr.Info("Started graph generation...")
         messages = graph_template.format_messages(
             explanation=explanation, component_mapping=component_mapping
         )
 
-        response = await self.llm.as_structured_llm(output_cls=Graph).achat(messages=messages)
+        response = await self.llm.as_structured_llm(output_cls=Graph).achat(
+            messages=messages
+        )
+        gr.Success("Graph generated!")
 
         graph = response.raw
 
         return GraphEvent(graph=graph)
 
     @step
-    async def html_diagram(self, ev: GraphEvent) -> DiagramEvent:
+    async def html_diagram(self, ev: GraphEvent) -> StopEvent:
         """
         Generates an HTML diagram based on the triplets extracted in the previous step.
 
@@ -88,4 +98,4 @@ class AnalysisFlow(Workflow):
 
         html = generate_graph(graph.triplets)
 
-        return DiagramEvent(diagram=html)
+        return StopEvent(html)

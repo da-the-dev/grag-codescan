@@ -13,16 +13,16 @@ def get_repo_tree_and_readme(repo, owner, branch, token) -> tuple[str, str]:
     try:
         readme = gh_service.get_github_readme(username=owner, repo=repo)
         file_tree = gh_service.get_github_file_paths_as_list(username=owner, repo=repo)
+
+        gr.Success("Repository file tree and readme extracted successfully.")
+
+        return file_tree, readme
     except ValueError as e:
         gr.Error(f"{e}")
         return
     except Exception as e:
         gr.Error(f"Error: {e}")
         return
-
-    gr.Info("Repository file tree and readme extracted successfully.")
-
-    return file_tree, readme
 
 
 def sidebar():
@@ -57,6 +57,9 @@ def sidebar():
 
         file_tree = gr.State()
         readme = gr.State()
+
+        file_tree.change(print)
+        readme.change(print)
 
         run.click(
             get_repo_tree_and_readme,
