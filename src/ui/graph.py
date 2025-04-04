@@ -19,16 +19,14 @@ def graph(sidebar: dict[str, Any]):
         readme = sidebar["readme"]
 
         async def handler(file_tree, readme):
+            gr.Info("Started intial analysis...")
             w = AnalysisFlow(timeout=30)
-            results: str = await w.run(
+            results = await w.run(
                 file_tree=file_tree,
                 readme=readme,
             )
 
-            print("DONE\n", results)
-            print(results.diagram)
-
-            return str(results)
+            return results
 
         visualize_btn.click(
             handler,

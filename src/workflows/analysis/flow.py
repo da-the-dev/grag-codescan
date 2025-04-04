@@ -23,7 +23,6 @@ from .events import (
     InstructionEvent,
     MappingEvent,
     GraphEvent,
-    DiagramEvent,
 )
 
 
@@ -39,7 +38,7 @@ class AnalysisFlow(Workflow):
 
         await ctx.set("file_tree", file_tree)
 
-        gr.Info("Started intial analysis...")
+
         messages = instruction_template.format_messages(
             file_tree=file_tree, readme=readme
         )
@@ -98,7 +97,5 @@ class AnalysisFlow(Workflow):
         graph = ev.graph
 
         html = generate_graph(graph.triplets)
-        
-        print(html)
 
-        return StopEvent(diagram=html)
+        return StopEvent(html)
