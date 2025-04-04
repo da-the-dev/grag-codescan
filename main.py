@@ -10,6 +10,6 @@ with gr.Blocks() as demo:
     sb = sidebar()
         
     graph(sb)
-    chat(sb) 
+    # chat(sb) 
     
 demo.launch(debug=True)
