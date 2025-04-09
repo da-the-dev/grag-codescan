@@ -24,7 +24,7 @@ from .events import *
 class AnalysisFlow(Workflow):
     llm = Ollama(
         "qwen2.5-coder",
-        base_url="http://ollama:11434" if os.environ["PROD"] else "http://localhost:11434",
+        base_url="http://ollama:11434" if os.environ.get("PROD") else "http://localhost:11434",
     )
 
     @step
